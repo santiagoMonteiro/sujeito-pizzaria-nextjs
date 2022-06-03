@@ -23,6 +23,12 @@ export default function Home() {
 
   async function handleLogin(event: FormEvent): Promise<void> {
     event.preventDefault();
+    if (email === "" || password === "") {
+      alert("preencha os dados");
+      return;
+    }
+
+    setLoading(true);
 
     const credentials = {
       email,
@@ -30,6 +36,8 @@ export default function Home() {
     };
 
     await signIn(credentials);
+
+    setLoading(false);
   }
 
   return (
@@ -55,7 +63,9 @@ export default function Home() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
-            <Button type="submit">Acessar</Button>
+            <Button type="submit" loading={loading}>
+              Acessar
+            </Button>
           </form>
 
           <Link href="/signup">

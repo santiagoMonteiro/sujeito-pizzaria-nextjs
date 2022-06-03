@@ -1,5 +1,8 @@
+import { FormEvent, useContext, useState } from "react";
+
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 import styles from "../home.module.scss";
 
@@ -8,9 +11,33 @@ import logoImg from "../../../public/logo.svg";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 
-import Link from "next/link";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function SignUp() {
+  const { signUp } = useContext(AuthContext);
+
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  async function handleSignUp(event: FormEvent) {
+    event.preventDefault();
+
+    if (name === "" || email === "" || password === "") {
+      alert("Preencha todos os campos");
+      return;
+    }
+
+    setLoading(true);
+
+    const credentials = { name, email, password };
+
+    await signUp(credentials);
+
+    setLoading(false);
+  }
+
   return (
     <>
       <Head>
@@ -21,14 +48,30 @@ export default function SignUp() {
         <Image src={logoImg} alt="Logo Sujeito Pizzaria" />
 
         <div className={styles.formContainer}>
+          <h1>Criando sua conta</h1>
+          <form onSubmit={handleSignUp}>
+            <Input
+              placeholder="Digite seu nome"
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+            />
+            <Input
+              placeholder="Digite seu email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            <Input
+              placeholder="Sua senha"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
 
-        <h1>Criando sua conta</h1>
-          <form>
-            <Input placeholder="Digite seu nome" type="text" />
-            <Input placeholder="Digite seu email" type="email" />
-            <Input placeholder="Sua senha" type="password" />
-
-            <Button type="submit">Cadastrar</Button>
+            <Button type="submit" loading={loading}>
+              Cadastrar
+            </Button>
           </form>
 
           <Link href="/">
