@@ -21,7 +21,7 @@ export function setupApiClient(context = undefined) {
     (error: AxiosError) => {
       if (error.response.status === 401) {
         if (typeof window !== undefined) {
-          // am i in client-side?
+          // am i in client-side
           signOut();
         } else {
           return Promise.reject(new AuthTokenError());
