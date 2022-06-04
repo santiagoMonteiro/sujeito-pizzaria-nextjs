@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState, useEffect } from "react";
 
 import { destroyCookie, setCookie, parseCookies } from "nookies";
 
@@ -50,6 +50,34 @@ export function signOut() {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps>();
   const isAuthenticated = !!user;
+
+  console.log(user);
+
+  useEffect(() => {
+    async function getUserinfo() {
+      try {
+        const cookies = parseCookies();
+
+        const token = cookies["@nextauth.token"];
+
+        if (token) {
+          const response = await api.get("/userinfo");
+
+          const { id, name, email } = response.data;
+
+          setUser({
+            id,
+            name,
+            email,
+          });
+        }
+      } catch {
+        signOut();
+      }
+    }
+
+    getUserinfo();
+  }, []);
 
   async function signIn({ email, password }: SignInProps): Promise<void> {
     try {
