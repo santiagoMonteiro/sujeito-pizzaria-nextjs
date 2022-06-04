@@ -14,6 +14,7 @@ import { AuthContext } from "../contexts/AuthContext";
 
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { canSSRVisitor } from "../utils/canSSRVisitor";
 
 export default function Home() {
   const { signIn } = useContext(AuthContext);
@@ -79,3 +80,9 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps = canSSRVisitor(async (context) => {
+  return {
+    props: {}
+  }
+});
