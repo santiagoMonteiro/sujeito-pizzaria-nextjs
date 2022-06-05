@@ -51,8 +51,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps>();
   const isAuthenticated = !!user;
 
-  console.log(user);
-
   useEffect(() => {
     async function getUserinfo() {
       try {

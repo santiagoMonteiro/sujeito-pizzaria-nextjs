@@ -13,6 +13,7 @@ import { Button } from "../../components/ui/Button";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
+import { canSSRVisitor } from "../../utils/canSSRVisitor";
 
 export default function SignUp() {
   const { signUp } = useContext(AuthContext);
@@ -85,3 +86,9 @@ export default function SignUp() {
     </>
   );
 }
+
+export const getServerSideProps = canSSRVisitor(async (context) => {
+  return {
+    props: {}
+  }
+});
