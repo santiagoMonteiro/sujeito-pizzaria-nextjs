@@ -50,7 +50,6 @@ export default function SignUp() {
         <Image src={logoImg} alt="Logo Sujeito Pizzaria" />
 
         <div className={styles.formContainer}>
-          <h1>Criando sua conta</h1>
           <form onSubmit={handleSignUp}>
             <Input
               placeholder="Digite seu nome"

@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
 
-  background: var(--dark-900);
+  background: var(--dark-700);
 }
 
 .formContainer {
@@ -16,11 +16,6 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 1.5rem;
-
-  h1 {
-    color: white;
-    padding-bottom: 1rem;
-  }
 
   form {
     width: 90%;
